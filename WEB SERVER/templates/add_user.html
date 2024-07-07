@@ -1,0 +1,45 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<h1 style="margin-top: 10px; text-align: center;">เพิ่มผู้ใช้</h1>
+
+<div class="col d-flex justify-content-center">
+    <div class="card " style="width: 30rem;">
+        <div class="card-body">
+            <div class="col d-flex justify-content-center">
+                <img src="static/add_user.png" alt="">
+            </div>
+            <form action="{{url_for('manage_user_route.add_user')}}" method="POST">
+                <div class="d-flex justify-content-between">
+                    <div class="mb-3">
+                        <label class="form-label">ชื่อ</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">นามสกุล</label>
+                        <input type="text" class="form-control" name="lastname">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">รหัสนักศึกษา</label>
+                    <input type="text" class="form-control" name="stdId">
+                </div>
+
+                {% if list_of_sec|length > 1 %}
+                <div class="mb-3">
+                    <label class="form-label">กลุ่มเรียน</label>
+                    <select class="form-control" name="section">
+                        {% for i in list_of_sec%}
+                        <option value="{{i}}">{{i}}</option>
+                        {%endfor%}
+                      </select>
+                </div>
+                {%endif%}
+
+        </div>
+    </div>
+</div>
+<div class="col-md-12 text-center" style="margin-top: 10px;">
+    <button style="margin-bottom: 10px;" type="submit " class="btn btn-success ">ยืนยัน</button>
+</div>
+</form>{% endblock %}

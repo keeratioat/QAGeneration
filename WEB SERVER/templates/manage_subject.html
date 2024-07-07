@@ -1,0 +1,48 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<h1 style="text-align: center; margin-top: 10px;">รายชื่อวิชา</h1>
+<div style="text-align:right;">
+    <a href="{{url_for('manage_user_route.add_subject')}}" class="btn btn-primary " style=" margin-bottom: 10px;"><i class="fa fa-plus"></i> เพิ่มรายวิชา</a>
+
+
+</div>
+<div class="card">
+    <div class="card-body">
+        <table class="table" style="margin-top: 15px;">
+            <thead>
+                <tr>
+
+                    <th scope="col">รหัสวิชา</th>
+                    <th scope="col">ชื่อวิชา</th>
+                    <th scope="col">แก้ไข</th>
+                    <th scope="col">ลบ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in subject %}
+                <tr>
+
+                    <td>{{i.subject_id}} </td>
+                    <td>{{i.subject_name}}</td>
+
+                    <td>
+                        <a href="{{url_for('manage_user_route.edit_subject',sub_id = i.subject_id , sub_name = i.subject_name)}}" class="btn btn-success">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{url_for('manage_user_route.manage_subject_delete' , subject_id = i.subject_id) }}" class="btn btn-success">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+{% endblock %}

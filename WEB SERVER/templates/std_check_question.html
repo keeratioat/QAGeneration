@@ -1,0 +1,36 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<h1 style="text-align: center; margin-top: 20px">ตรวจข้อสอบ</h1>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table" style="margin-top: 15px;">
+            <thead>
+                <tr>
+
+                    <th scope="col">ชุดข้อสอบ</th>
+                    <th scope="col">ตรวจข้อสอบ</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in std %}
+                <tr>
+
+                    <td>{{i.exam_name}} </td>
+                    <td><a href="{{url_for('teacher_route.check_question_exam' , exam_name = i.exam_name)}}" class="btn btn-success"><i class="fa fa-book fa-fw"></i></a></td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 10px;">
+
+    <a class="btn btn-success" href="{{url_for('teacher_route.main_page')}}">กลับหน้าหลัก</a>
+</div>
+
+{% endblock %}

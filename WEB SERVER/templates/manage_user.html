@@ -1,0 +1,106 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<h1 style="text-align: center; margin-top: 20px">รายชื่อนักศึกษา</h1>
+
+
+<div class="input-group rounded" style="margin-bottom: 15px;">
+    <input type="search" class="form-control rounded" placeholder="ค้นหาจากชื่อ" name="search" />
+    <button type="submit" class="input-group-text border-0" id="search-addon">
+                    ค้นหา
+        </button>
+</div>
+</form>
+
+<div class="card">
+    <div class="card-body">
+        <form action="{{url_for('manage_user_route.delete_select_user')}}" method="POST">
+            <table class="table" style="margin-top: 15px;">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">รหัสนักศึกษา</th>
+                        <th scope="col">ชื่อ-นามสกุล</th>
+                        <th scope="col">กลุ่ม</th>
+                        <th scope="col">แก้ไข</th>
+                        <th scope="col">ลบ</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in user %}
+                    <tr>
+
+                        <td>
+                            <input type="checkbox" id="check" onclick="selectUser()" name="delete_select_user" value="{{i.user_id}}">
+                        </td>
+                        <td>{{i.std_id}}</td>
+                        <td>{{i.firstname}} {{i.lastname}}</td>
+                        <td>{{i.section}}</td>
+                        <td>
+                            <button id="editButton" type="button" onclick="editUser('{{i.firstname}}' ,'{{i.lastname}}','{{i.section}}')" class="btn btn-success" disabled>
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button id="delButton" type="button" onclick="delUser('{{i.std_id}}')" class="btn btn-success" disabled>
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+
+
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 10px;">
+
+    <a class="btn btn-success" href="{{url_for('teacher_route.main_page')}}">กลับหน้าหลัก</a>
+</div>
+
+<script>
+    var checkUser = document.querySelectorAll("#check");
+    var editButton = document.querySelectorAll("#editButton");
+    var delButton = document.querySelectorAll("#delButton");
+
+
+
+    function selectUser() {
+
+
+        for (let i = 0; i < checkUser.length; i++) {
+            if (checkUser[i].checked == true) {
+                editButton[i].disabled = false;
+                delButton[i].disabled = false;
+            } else {
+                editButton[i].disabled = true;
+                delButton[i].disabled = true;
+            }
+
+        }
+
+    }
+
+    function delUser(user_id) {
+
+        console.log(user_id);
+        let text = "คุณแน่ใจหรือไม่ที่จะลบผู้ใช้คนนีั";
+        if (confirm(text) == true) {
+            console.log(user_id);
+
+            window.location.href = "/manage_user/" + user_id
+        }
+
+    }
+
+    function editUser(firstname, lastname, section) {
+
+
+        window.location.href = "/edit_user/" + firstname + "/" + lastname + "/" + section
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<h1 style="text-align: center; margin-top: 10px;">รายชื่อนักศึกษา</h1>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table" style="margin-top: 15px;">
+            <thead>
+                <tr>
+
+
+                    <th scope="col">ชื่อ-นามสกุล</th>
+                    <th scope="col">วิชา</th>
+                    <th scope="col">กลุ่มเรียน</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in std %}
+                <tr>
+
+                    <td>{{i.firstname}} {{i.lastname}}</td>
+                    <td>{{i.subject}}</td>
+                    <td>{{i.section}}</td>
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+{% endblock %}

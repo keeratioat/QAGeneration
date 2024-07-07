@@ -1,0 +1,14 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+<h1 style="margin-top: 10px;">เพิ่มวิชา</h1>
+<form action="{{url_for('manage_user_route.add_subject')}}" method="POST">
+    <div class="mb-3">
+        <label class="form-label">รหัสวิชา</label>
+        <input type="text" class="form-control" name="sub_id">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">ชื่อวิชา</label>
+        <input type="text" class="form-control" name="sub_name">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'layout/layout.html' %} {% block content %}
+
+<!--<img src="static/qa.jpg" alt="" style="float: left;" width="500px">-->
+
+<form action="{{url_for('login_route.login')}}" method="POST">
+
+    <div class="col d-flex justify-content-center" style="margin-top: 50px;">
+        <div class="card " style="width: 50rem;">
+            <div class="card-body">
+                <img src="static/login.jpg" alt="" width="200px" class="rounded mx-auto d-block" style="float: left;">
+                <div class="row">
+
+                    <div class="form-group col-10" style="margin-left: 10px;">
+                        <label style="font-size: 16pt;">ชื่อผู้ใช้</label>
+                        <input type="text" class="form-control" name="uname" placeholder="กรอกชื่อผู้ใช้" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-10" style="margin-left: 10px;">
+                        <label style="font-size: 16pt;">รหัสผ่าน</label>
+                        <input type="password" class="form-control" name="pwd" placeholder="กรอกรหัสผ่าน">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group " style="margin-left: 10px;">
+                        <button type="submit" style="margin-top: 10px;" class="btn btn-primary">เข้าสู่ระบบ</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+{% endblock %}

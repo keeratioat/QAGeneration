@@ -1,0 +1,69 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+
+<h1 style="text-align: center; margin: 10px;">คะแนนนักศึกษา</h1>
+
+<div class="d-flex justify-content-between">
+    <div>
+        <h4>ชุดข้อสอบ {{exam_name}}</h4>
+
+    </div>
+
+
+</div>
+
+
+<div class="card" style="margin-top: 10px;">
+    <div class="card-body">
+
+        <table class="table" style="margin-top: 15px;">
+            <thead>
+                <tr>
+                    <th scope="col">รหัสนักศึกษา</th>
+                    <th scope="col">ชื่อ-นามสกุล</th>
+
+                    <th scope="col">ปรนัย</th>
+                    <th scope="col">จับคู่</th>
+                    <th scope="col">อัตนัย</th>
+
+                    <th scope="col">รวม</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in std_point%}
+                <tr>
+                    <td>{{i.student_id}}</td>
+
+                    <td>{{i.firstname}} {{i.lastname}}</td>
+
+                    <td>{{i.mcq}}/{{i.mcq_point}}</td>
+                    <td>{{i.fitb}}/{{i.fitb_point}}</td>
+                    {%if i.question == None%}
+                    <td style="color:red ;">ยังไม่ตรวจข้อเขียน</td>
+                    <td>{{i.mcq + i.fitb}}</td>
+                    {%else%}
+                    <td>{{i.question}}/{{i.question_point}}</td>
+                    <td>{{i.mcq + i.fitb + i.question}}/{{i.mcq_point + i.fitb_point +i.question_point}}</td>
+                    {% endif %}
+
+
+                </tr>
+                {%endfor%}
+            </tbody>
+
+
+        </table>
+
+    </div>
+</div>
+
+<div style="text-align: right; margin-top: 10px;">
+    <!--<a href="{{url_for('teacher_route.std_point_pdf' ,exam_name = exam_name)}}" class="btn btn-success">ดาวน์โหลดคะแนน</a>-->
+</div>
+
+<div style="text-align: center; margin-top: 10px;">
+
+    <a class="btn btn-success" href="{{url_for('teacher_route.main_page')}}">กลับหน้าหลัก</a>
+</div>
+
+{% endblock %}

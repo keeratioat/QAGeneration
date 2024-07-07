@@ -1,0 +1,25 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+<h1>Time <input type="number" id="hour" value="4" style="width: 4.3rem;" disabled>:<input type="number" id="minute" value="00" style="width: 4.3rem;" disabled>:<input type="number" id="sec" value="00" style="width: 4.3rem;" disabled></h1>
+<h5 style="margin-top: 10px; margin-bottom: 10px;">จงเติมคำให้ถูกต้อง</h5>
+
+
+<button class="btn btn-secondary">sometext1</button>
+<button class="btn btn-secondary">sometext2</button>
+<button class="btn btn-secondary">sometext3</button>
+<button class="btn btn-secondary">sometext4</button>
+
+
+<h5 style="margin-top: 10px;">ข้อ 6 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur explicabo consectetur molestiaecati culpa maiores quidem dolorum laboriosam rerum porro, voluptatum minus. </h5>
+<input type="text">
+
+<h5 style="margin-top: 10px;">ข้อ 7 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur explicabo consectetur molestiaecati culpa maiores quidem dolorum laboriosam rerum porro, voluptatum minus. </h5>
+<input type="text">
+
+<h5 style="margin-top: 10px;">ข้อ 8 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur explicabo consectetur molestiaecati culpa maiores quidem dolorum laboriosam rerum porro, voluptatum minus. </h5>
+<input type="text">
+
+<h5 style="margin-top: 10px;">ข้อ 9 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur explicabo consectetur molestiaecati culpa maiores quidem dolorum laboriosam rerum porro, voluptatum minus. </h5>
+<input type="text">
+<br>
+<a href="{{url_for('std_route.examchoice')}}" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px;">ก่อนหน้า</a>
+<a href="{{url_for('std_route.examtext')}}" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px; float: right;">ถัดไป</a> {% endblock %}

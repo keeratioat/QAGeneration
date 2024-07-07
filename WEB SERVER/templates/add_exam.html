@@ -1,0 +1,138 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+<h1 style="text-align: center; margin-top: 10px;">เลือกคำถาม</h1>
+<input type="checkbox" id="selectAll" onclick="selectAll()"> <label for="selectAll">เลือกทั้งหมด</label>
+<div class="card" style="margin-bottom: 10px;">
+    <div class="card-body">
+        <h2>คำถามจับคู่</h2>
+        <form action="/show_temp_detail" method="POST">
+            <table class="table table-striped" style="margin-top: 15px;">
+                <thead>
+                    <tr>
+
+                        <th scope="col">คำถาม</th>
+                        <th scope="col">คำตอบ</th>
+                        <th scope="col">เลือกคำถาม</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for i in fitb_ques %}
+                    <tr>
+
+                        <td>{{i.question}} </td>
+                        <td>{{i.anwser}}</td>
+                        <td><input type="checkbox" id="question" name="question" value="{{i.question}}"></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+    </div>
+
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h2>คำถามปรนัย</h2>
+        <form action="/add_exam_detail" method="POST">
+            <table class="table table-secondary table-striped" style="margin-top: 15px;">
+                <thead>
+                    <tr>
+
+                        <th scope="col">คำถาม</th>
+                        <th scope="col">ตัวเลือก1</th>
+                        <th scope="col">ตัวเลือก2</th>
+                        <th scope="col">ตัวเลือก3</th>
+                        <th scope="col">ตัวเลือก4</th>
+                        <th scope="col">คำตอบ</th>
+                        <th scope="col">เลือกคำถาม</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for i in mcq_question %}
+                    <tr>
+
+                        <td>{{i.question}} </td>
+                        <td>{{i.choice1}} </td>
+                        <td>{{i.choice2}} </td>
+                        <td>{{i.choice3}} </td>
+                        <td>{{i.choice4}} </td>
+                        <td>{{i.answer}}</td>
+                        <td><input type="checkbox" id="question" name="question" value="{{i.question}}"></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+    </div>
+
+</div>
+
+<div class="card" style="margin-top: 10px;">
+    <div class="card-body">
+        <h2>คำถามอัตนัย</h2>
+        <form action="/add_exam_detail" method="POST">
+            <table class="table table-success table-striped" style="margin-top: 15px;">
+                <thead>
+                    <tr>
+
+                        <th scope="col">คำถาม</th>
+
+                        <th scope="col">เลือกคำถาม</th>
+                        <th scope="col">กำหนดคะแนน</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for i in questions %}
+                    <tr>
+
+                        <td>{{i.question}} </td>
+
+                        <td><input type="checkbox" id="question" name="question" value="{{i.question}}"></td>
+                        <td>
+                            <div class="form-group col-5">
+                                <input type="text" class="form-control" name="point">
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+    </div>
+
+</div>
+<a href="/delete_temp_exam" class="btn btn-primary" style="float: left; margin-top: 10px; margin-bottom: 30px;">ย้อนกลับ</a>
+<button type="submit" class="btn btn-primary" style="float: right; margin-top: 10px;">ยืนยัน</button>
+</form>
+
+<script>
+    function selectAll() {
+        var selectAll = document.getElementById("selectAll");
+        var question = document.querySelectorAll("#question");
+        console.log(question)
+
+        if (selectAll.checked == true) {
+            for (let i = 0; i < question.length; i++) {
+                question[i].checked = true;
+            }
+        } else {
+            for (let i = 0; i < question.length; i++) {
+                question[i].checked = false;
+            }
+        }
+    }
+</script>
+
+{% endblock %}

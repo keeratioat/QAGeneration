@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+</head>
+<style>
+    table,
+    td,
+    th {
+        border: 1px solid;
+        padding: 10px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+</style>
+
+<body>
+    <h2 style="text-align: center; margin-top: 20px">รายชื่อนักศึกษา</h2>
+    <h3>อาจารย์ {{session['firstname']}} {{session['lastname']}}</h3>
+    <table class="table">
+        <thead>
+            <tr style="border: 1px solid;">
+                <th>รหัสนักศึกษา</th>
+                <th>ชื่อ-นามสกุล</th>
+                <th>วิชา</th>
+                <th>กลุ่ม</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in std %}
+            <tr>
+                <td> {{i.std_id}} </td>
+                <td> {{i.firstname}} {{i.lastname}} </td>
+                <td> {{i.subject}} </td>
+                <td> {{i.section}} </td>
+
+
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

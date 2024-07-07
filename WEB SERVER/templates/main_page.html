@@ -1,0 +1,108 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>อัปโหลดข้อสอบ (.java)</h3>
+                    <a href="{{url_for('teacher_route.upload_file')}}"><i class="fa fa-upload" style="font-size:48px"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>เพิ่มผู้ใช้</h3>
+
+                    <a href="{{url_for('manage_user_route.select_add_user')}}"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>รายชื่อนักศึกษา</h3>
+                    <a href="{{url_for('manage_user_route.std_pdf')}}"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>จัดการผู้ใช้</h3>
+
+                    <a href="{{url_for('manage_user_route.manage_user')}}"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>จัดการข้อสอบ</h3>
+                    <a href="{{url_for('manage_user_route.manage_exam')}}"><i class="fa fa-edit" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>เปิด-ปิดข้อสอบ</h3>
+                    <a href="{{url_for('teacher_route.all_exam')}}"><i class="fa fa-edit" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>ตรวจข้อสอบ</h3>
+                    <a href="{{url_for('teacher_route.check_question')}}"><i class="fa fa-edit" style="font-size:48px"></i></a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>คะแนนนักศึกษา</h3>
+                    <a href="{{url_for('teacher_route.std_point_exam_name')}}"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

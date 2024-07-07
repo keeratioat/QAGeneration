@@ -1,0 +1,719 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+<h1>เหลือเวลาทำข้อสอบ <input type="number" id="hour" value="{{hr}}" style="width: 4.3rem;" disabled>:<input type="number" id="minute" value="{{min}}" style="width: 4.3rem;" disabled>:<input type="number" id="sec" value="{{sec}}" style="width: 4.3rem;" disabled></h1>
+<h5 id="instrution_exam" style="margin-top: 10px; margin-bottom: 10px;">
+
+</h5>
+
+
+<div>
+<div class="card" id="all_anwser" style="margin: 15px 0px 15px 0px;">
+        <div id="all_anwser_body" class="card-body" id="all_anwser" style="margin: 15px 0px 15px 0px;">
+        
+	</div>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ส่งข้อสอบ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+			คุณแน่ใจหรือไม่ที่จะส่งข้อสอบครั้งนี้
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ไม่</button>
+        <button type="button" onclick="sentExam()" class="btn btn-success">ส่งข้อสอบ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+    <div class="card " style="width: 100%; margin-top: 15px;">
+        <div class="card-body">
+		
+		<div class="row">
+		<div class="col-sm-6">
+		<textarea id="codeText" class="form-control" id="exampleFormControlTextarea1" rows="10" disabled>{{code_text}}</textarea>
+		</div>
+		
+		<div class="col-sm-6 text-right">
+		<p id="question"></p>
+		<textarea id="anwserTextArea" class="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
+        <div id="hideChoice1" class="form-check">
+            <input id="checkChoice1" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                <p id="choice1"></p>
+            </label>
+			</div>
+		
+
+		
+        <div id="hideChoice2" class="form-check">
+            <input id="checkChoice2" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                <p id="choice2"></p>
+            </label>
+        </div>
+ 
+
+
+        <div id="hideChoice3" class="form-check">
+            <input id="checkChoice3" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                <p id="choice3"></p>
+            </label>
+        </div>
+ 
+
+
+        <div id="hideChoice4" class="form-check">
+            <input id="checkChoice4" class="form-check-input"  type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                <p id="choice4"></p>
+            </label>
+        </div>
+		<div id="question_fitb"></div>
+			</div>
+		</div>
+	</div>
+
+</div>
+		
+		
+
+<button onclick="changeBackwardIndexExam()" id="backBtn" class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px;">ก่อนหน้า</button>
+<button onclick="changeForwardIndexExam()" id="nextBtn" class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px; float: right;">ถัดไป</button>
+<button class="btn btn-success" id="sentExamBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-top: 10px; margin-bottom: 10px; float: right;"><i class="fa fa-book fa-fw"></i> ส่งข้อสอบ</button>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script>
+	let exam = {{exam | tojson | safe}};
+	let instrution_exam = document.getElementById("instrution_exam");
+	
+	let indexExam = 0;
+	
+	let backBtn = document.getElementById("backBtn");
+	let nextBtn = document.getElementById("nextBtn");
+	let sentExamBtn = document.getElementById("sentExamBtn");
+	
+	let codeText = document.getElementById("codeText");
+	
+	let question = document.getElementById("question");
+	let choice1 = document.getElementById("choice1");
+	let choice2 = document.getElementById("choice2");
+	let choice3  = document.getElementById("choice3");
+	let choice4 = document.getElementById("choice4");
+	
+	let checkChoice1 = document.getElementById("checkChoice1");
+	let checkChoice2 = document.getElementById("checkChoice2");
+	let checkChoice3 = document.getElementById("checkChoice3");
+	let checkChoice4 = document.getElementById("checkChoice4");
+	
+	let anwserTextArea = document.getElementById("anwserTextArea");
+	
+	let hideChoice1 = document.getElementById("hideChoice1");
+	let hideChoice2 = document.getElementById("hideChoice2");
+	let hideChoice3 = document.getElementById("hideChoice3");
+	let hideChoice4 = document.getElementById("hideChoice4");
+	
+	let question_fitb = document.getElementById("question_fitb");
+	let all_anwser = document.getElementById("all_anwser");	
+	let all_anwser_body = document.getElementById("all_anwser_body");
+	
+	
+	let current_anwer = "";
+	let question_fitb_text = "";
+	let anwer_fitb_text = "";
+	
+	let isCreateFitb = false;
+	createFitb();
+	instrution_exam.innerHTML = "จงเลือกคำตอบที่ถูกที่สุด";
+	question.innerHTML = "ข้อ 1 "+exam[0].question;
+	choice1.innerHTML = exam[0].choice1;
+	choice2.innerHTML = exam[0].choice2;
+	choice3.innerHTML = exam[0].choice3;
+	choice4.innerHTML = exam[0].choice4;
+	
+	anwserTextArea.hidden=true;
+	all_anwser.hidden = true;
+	question_fitb.hidden = true;
+	sentExamBtn.hidden = true;
+	nextBtn.hidden = false;
+	backBtn.hidden = true;
+	
+    var h = document.getElementById("hour");
+    var m = document.getElementById("minute");
+    var s = document.getElementById("sec");
+    var startTimer = null;
+    //initialize the variable
+    function startInterval() {
+        startTimer = setInterval(function() {
+            timer();
+        }, 1000);
+    }
+    startInterval();
+
+    function timer() {
+        if (h.value == 0 && m.value == 0 && s.value == 0) {
+            h.value = 0;
+            m.value = 0;
+            s.value = 0;
+            
+            stopInterval()
+			sentExam();
+        } else if (s.value != 0) {
+            s.value--;
+        } else if (m.value != 0 && s.value == 0) {
+            s.value = 59;
+            m.value--;
+        } else if (h.value != 0 && m.value == 0) {
+            m.value = 59;
+			s.value = 59;
+            h.value--;
+        }
+        return;
+    }
+
+    function stopInterval() {
+        clearInterval(startTimer);
+    }
+	
+	checkChoice1.addEventListener("click", function(){
+		exam[indexExam].anwser = choice1.innerHTML	
+		console.log(choice1.innerHTML)
+		console.log(exam[indexExam].anwser)
+		});	
+	checkChoice2.addEventListener("click", function(){
+		exam[indexExam].anwser = choice2.innerHTML	
+		console.log(choice2.innerHTML)
+		console.log(exam[indexExam].anwser)
+	});	
+	checkChoice3.addEventListener("click", function(){
+		exam[indexExam].anwser = choice3.innerHTML	
+		console.log(choice3.innerHTML)
+		console.log(exam[indexExam].anwser)
+	});	
+	checkChoice4.addEventListener("click", function(){
+		exam[indexExam].anwser = choice4.innerHTML	
+		console.log(choice4.innerHTML)
+		console.log(exam[indexExam].anwser)
+	});	
+	
+	function searchFirstFitb(){
+		let first_fitb = 0;
+		for(let i = 0 ; i < {{exam | length}} ;i++){
+			if(exam[i].exam_type == "fitb"){
+				 first_fitb = i+1;
+				 return first_fitb;
+			}
+		}
+	}
+	function createFitb(){
+		let count = 0;
+		let len_anwser = 0;
+		for(let i = searchFirstFitb()-1; i < {{exam | length}} ; i++){
+			let anwser = document.createElement("div");
+			let sub_question = document.createElement("p");
+			let divTextField = document.createElement("div");
+			let textFieldAws = document.createElement("INPUT");
+						
+			textFieldAws.setAttribute("type" , "number");
+			textFieldAws.setAttribute("min" , "1");
+						//set class and style to anwser
+			anwser.classList = "d-inline p-2 bg-success text-white";
+			
+			if(count %2 == 0 && count !=0 || len_anwser >= 140){			
+			all_anwser_body.innerHTML += "<br><br>"
+			len_anwser = 0;
+			}
+			anwser.style.margin = '0px 5px';
+			anwer_fitb_text = (count+1)+") "+exam[i].all_anwser;
+			len_anwser += anwer_fitb_text.length
+			console.log(anwer_fitb_text.length)
+			count++;
+						//set class and style to textfield
+			textFieldAws.classList = "form-control";
+			textFieldAws.style.width = "4.5rem";
+			textFieldAws.id = "textFieldAws"
+						
+			question_fitb_text = "ข้อ "+(i+1).toString()+" "+exam[i].question;
+						
+			sub_question.innerHTML = question_fitb_text;
+			question_fitb.appendChild(sub_question);
+			divTextField.appendChild(textFieldAws)
+			question_fitb.appendChild(divTextField);
+						
+			anwser.innerHTML = anwer_fitb_text;
+			all_anwser_body.appendChild(anwser);
+			console.log(exam[i]);
+						
+			isCreateFitb = true;
+			}
+	}
+		
+	function addAnwserFitb(){
+	let text_field_aws = document.querySelectorAll("#textFieldAws");
+		for(let i=0 ; i < text_field_aws.length ;i++){
+						if(text_field_aws[i].value.length == 0){
+							exam[searchFirstFitb()-1+i].anwser ="";
+							console.log("value is : non");
+							console.log(exam[searchFirstFitb()-1+i]);
+							console.log(searchFirstFitb()+i);
+							console.log(text_field_aws[i].value);
+							continue;
+						}else{
+						console.log("value is :"+text_field_aws[i].value);
+						let user_anwser_fitb = parseInt(text_field_aws[i].value) + searchFirstFitb()-2;
+						exam[searchFirstFitb()-1+i].anwser = exam[user_anwser_fitb].all_anwser;
+						
+						console.log(exam[searchFirstFitb()-1+i]);
+						console.log(searchFirstFitb()+i);
+						console.log(text_field_aws[i].value);
+						}
+						
+						
+					}
+
+	}
+		
+	 console.log(searchFirstFitb());
+	function changeForwardIndexExam(event){
+			backBtn.hidden = false;
+            if ({{exam | length}} === indexExam+1) {
+				
+				if(exam[indexExam].exam_type == "question"){
+					current_anwer = anwserTextArea.value;
+				
+					exam[indexExam].anwser = current_anwer;
+					
+					console.log(exam[indexExam].anwser);
+					
+				}
+				if(exam[indexExam].exam_type == "fitb"){
+					
+					addAnwserFitb();
+					
+					
+				}
+				instrution_exam.innerHTML = "จงเลือกคำตอบที่ถูกที่สุด";
+				question.hidden = false;
+				all_anwser.hidden = true;
+				question_fitb.hidden = true;
+				console.log(indexExam);
+				indexExam = 0;
+				anwserTextArea.hidden=true;
+				codeText.hidden=false;
+				hideChoice1.hidden=false;
+				hideChoice2.hidden=false;
+				hideChoice3.hidden=false;
+				hideChoice4.hidden=false;
+				
+				
+				
+				if(exam[indexExam].hasOwnProperty('anwser')){
+					
+					question.innerHTML = "ข้อ "+(indexExam+1)+" "+exam[indexExam].question;
+					choice1.innerHTML = exam[indexExam].choice1;
+					choice2.innerHTML = exam[indexExam].choice2;
+					choice3.innerHTML = exam[indexExam].choice3;
+					choice4.innerHTML = exam[indexExam].choice4; 
+				
+					if(exam[indexExam].choice1 == exam[indexExam].anwser){
+						document.getElementById("checkChoice1").checked = true;
+					}
+					else if(exam[indexExam].choice2 == exam[indexExam].anwser){
+						document.getElementById("checkChoice2").checked = true;
+					}
+					else if(exam[indexExam].choice3 == exam[indexExam].anwser){
+						document.getElementById("checkChoice3").checked = true;
+					}
+					else if(exam[indexExam].choice4 == exam[indexExam].anwser){
+						document.getElementById("checkChoice4").checked = true;
+					}
+												
+				}
+			
+				else{
+					document.getElementById("checkChoice1").checked = false;
+					document.getElementById("checkChoice2").checked = false;
+					document.getElementById("checkChoice3").checked = false;
+					document.getElementById("checkChoice4").checked = false;
+				
+					question.innerHTML = "ข้อ 1 "+exam[indexExam].question;
+					choice1.innerHTML = exam[indexExam].choice1;
+					choice2.innerHTML = exam[indexExam].choice2;
+					choice3.innerHTML = exam[indexExam].choice3;
+					choice4.innerHTML = exam[indexExam].choice4; 
+				}
+				
+			
+		
+            }else{
+				indexExam++;
+				question.innerHTML = "ข้อ "+(indexExam+1)+" "+exam[indexExam].question;
+				console.log({{exam | length}});	
+				console.log(exam[indexExam-1]);	
+				
+				if(exam[indexExam].exam_type == "mcq"){
+					instrution_exam.innerHTML = "จงเลือกคำตอบที่ถูกที่สุด";
+					question.hidden=false;
+					anwserTextArea.hidden=true;
+					codeText.hidden=false;
+					hideChoice1.hidden=false;
+					hideChoice2.hidden=false;
+					hideChoice3.hidden=false;
+					hideChoice4.hidden=false;
+					
+				if(exam[indexExam].hasOwnProperty('anwser')){
+					if(exam[indexExam].choice1 == exam[indexExam].anwser){
+						document.getElementById("checkChoice1").checked = true;
+					}
+					else if(exam[indexExam].choice2 == exam[indexExam].anwser){
+						document.getElementById("checkChoice2").checked = true;
+					}
+					else if(exam[indexExam].choice3 == exam[indexExam].anwser){
+						document.getElementById("checkChoice3").checked = true;
+					}
+					else if(exam[indexExam].choice3 == exam[indexExam].anwser){
+						document.getElementById("checkChoice4").checked = true;
+					}
+					
+					
+					choice1.innerHTML = exam[indexExam].choice1;
+					choice2.innerHTML = exam[indexExam].choice2;
+					choice3.innerHTML = exam[indexExam].choice3;
+					choice4.innerHTML = exam[indexExam].choice4; 
+				
+				}
+				else{
+				document.getElementById("checkChoice1").checked = false;
+				document.getElementById("checkChoice2").checked = false;
+				document.getElementById("checkChoice3").checked = false;
+				document.getElementById("checkChoice4").checked = false;
+				
+                question.innerHTML = "ข้อ "+(indexExam+1)+" "+exam[indexExam].question;
+				choice1.innerHTML = exam[indexExam].choice1;
+				choice2.innerHTML = exam[indexExam].choice2;
+				choice3.innerHTML = exam[indexExam].choice3;
+				choice4.innerHTML = exam[indexExam].choice4; 
+					}
+				}
+				else if(exam[indexExam].exam_type == "question"){
+					current_anwer = anwserTextArea.value;
+					if(exam[indexExam].hasOwnProperty('anwser')){
+						anwserTextArea.value = exam[indexExam].anwser;
+												
+						if (exam[indexExam-1].exam_type == "question"){
+							
+							exam[indexExam-1].anwser = current_anwer;
+
+						}
+		
+					}
+					else{
+						if (exam[indexExam-1].exam_type == "question"){
+						
+						exam[indexExam-1].anwser = anwserTextArea.value;
+						
+						anwserTextArea.value = "";
+						}
+					}	
+					instrution_exam.innerHTML = "จงตอบคำถามให้ถูกต้องที่สุด";		
+					console.log(exam[indexExam]);
+					question.hidden=false;
+					anwserTextArea.hidden=false;
+					codeText.hidden=false;
+					hideChoice1.hidden=true;
+					hideChoice2.hidden=true;
+					hideChoice3.hidden=true;
+					hideChoice4.hidden=true;					
+					
+				}
+				if(exam[indexExam].exam_type == "fitb"){
+
+						
+					if(indexExam == searchFirstFitb()){
+					
+					let text_field_aws = document.querySelectorAll("#textFieldAws");
+					
+					for(let i=0 ; i < text_field_aws.length ;i++){
+						if(text_field_aws[i].value.length == 0){
+							exam[searchFirstFitb()-1+i].anwser ="";
+							console.log("value is : non");
+							console.log(exam[searchFirstFitb()-1+i]);
+							console.log(searchFirstFitb()+i);
+							console.log(text_field_aws[i].value);
+							continue;
+						}else{
+						console.log("value is :"+text_field_aws[i].value);
+						let user_anwser_fitb = parseInt(text_field_aws[i].value) + searchFirstFitb()-2;
+						exam[searchFirstFitb()-1+i].anwser = exam[user_anwser_fitb].all_anwser;
+						
+						console.log(exam[searchFirstFitb()-1+i]);
+						console.log(searchFirstFitb()+i);
+						console.log(text_field_aws[i].value);
+						}
+						
+						
+					}
+					
+						instrution_exam.innerHTML = "จงเลือกคำตอบที่ถูกที่สุด";
+						
+						question.hidden = false;
+						all_anwser.hidden = true;
+						question_fitb.hidden = true;
+						console.log(indexExam);
+						indexExam = 0;
+						question.innerHTML = "ข้อ "+(indexExam+1)+" "+exam[indexExam].question;
+						anwserTextArea.hidden=true;
+						codeText.hidden=false;
+						hideChoice1.hidden=false;
+						hideChoice2.hidden=false;
+						hideChoice3.hidden=false;
+						hideChoice4.hidden=false;
+					}else{	
+						if (exam[indexExam-1].exam_type == "question"){
+							current_anwer = anwserTextArea.value;
+							exam[indexExam-1].anwser = current_anwer;
+
+						}
+					sentExamBtn.hidden = false;
+					nextBtn.hidden = true;
+					instrution_exam.innerHTML = "จงเลือกตัวเลขมาใส่ในช่องว่างให้ถูกต้อง";
+					question.hidden=true;
+					anwserTextArea.hidden=true;
+					all_anwser.hidden=false;
+					codeText.hidden=false;
+					console.log(indexExam , {{exam | length}});
+					all_anwser.hidden = false;
+					question_fitb.hidden = false;				
+					indexExam = searchFirstFitb()-1;
+					
+				}	
+					
+				}
+					
+			}
+	}
+	function changeBackwardIndexExam(event){
+		sentExamBtn.hidden = true;
+		nextBtn.hidden = false;
+		
+		if(indexExam == 1){
+		backBtn.hidden = true;
+		}
+		
+		if(indexExam > 0){
+			indexExam--;
+			question.innerHTML = "ข้อ "+(indexExam+1)+" "+exam[indexExam].question;
+			if(exam[indexExam].exam_type == "mcq"){
+			instrution_exam.innerHTML = "จงเลือกคำตอบที่ถูกที่สุด";
+			console.log(exam[indexExam].anwser);
+			
+			
+			question_fitb.hidden = true;	
+			all_anwser.hidden = true;
+			anwserTextArea.hidden=true;
+			codeText.hidden=false;
+			hideChoice1.hidden=false;
+			hideChoice2.hidden=false;
+			hideChoice3.hidden=false;
+			hideChoice4.hidden=false;
+			if(exam[indexExam].choice1 == exam[indexExam].anwser){
+						document.getElementById("checkChoice1").checked = true;
+					}
+					else if(exam[indexExam].choice2 == exam[indexExam].anwser){
+						document.getElementById("checkChoice2").checked = true;
+					}
+					else if(exam[indexExam].choice3 == exam[indexExam].anwser){
+						document.getElementById("checkChoice3").checked = true;
+					}
+					else if(exam[indexExam].choice4 == exam[indexExam].anwser){
+						document.getElementById("checkChoice4").checked = true;
+					}
+					else{
+			document.getElementById("checkChoice1").checked = false;
+			document.getElementById("checkChoice2").checked = false;
+			document.getElementById("checkChoice3").checked = false;
+			document.getElementById("checkChoice4").checked = false;
+			}
+			question.hidden = false;	
+			choice1.innerHTML = exam[indexExam].choice1;
+			choice2.innerHTML = exam[indexExam].choice2;
+			choice3.innerHTML = exam[indexExam].choice3;
+			choice4.innerHTML = exam[indexExam].choice4;
+			
+
+		}else if(exam[indexExam].exam_type == "question"){
+			instrution_exam.innerHTML = "จงตอบคำถามให้ถูกต้องที่สุด";
+					current_anwer = anwserTextArea.value;
+					if(exam[indexExam].hasOwnProperty('anwser')){
+						anwserTextArea.value = exam[indexExam].anwser;
+												
+						if (exam[indexExam+1].exam_type == "question"){
+							
+							exam[indexExam+1].anwser = current_anwer;
+
+						}
+		
+					}
+					else{
+						if (exam[indexExam+1].exam_type == "question"){
+						
+						exam[indexExam+1].anwser = anwserTextArea.value;
+						
+						anwserTextArea.value = "";
+						}
+					}
+					question.hidden = false;					
+					question_fitb.hidden = true;
+					all_anwser.hidden = true;
+					console.log(exam[indexExam]);
+					anwserTextArea.hidden=false;
+					codeText.hidden=false;
+					hideChoice1.hidden=true;
+					hideChoice2.hidden=true;
+					hideChoice3.hidden=true;
+					hideChoice4.hidden=true;					
+					
+		}else if(exam[indexExam].exam_type == "fitb"){
+			if(indexExam-1 == searchFirstFitb()){
+			
+					addAnwserFitb();
+					
+					indexExam = searchFirstFitb()-2;
+					question.innerHTML = "ข้อ "+(indexExam+1)+" "+exam[indexExam].question;
+					instrution_exam.innerHTML = "จงตอบคำถามให้ถูกต้องที่สุด";
+					question.hidden = false;					
+					question_fitb.hidden = true;
+					all_anwser.hidden = true;
+					console.log(exam[indexExam]);
+					anwserTextArea.hidden=false;
+					codeText.hidden=false;
+					hideChoice1.hidden=true;
+					hideChoice2.hidden=true;
+					hideChoice3.hidden=true;
+					hideChoice4.hidden=true;
+			}
+			
+
+		}
+				
+			
+		}else{
+			indexExam = {{exam | length}}-1;
+			question.innerHTML = "ข้อ "+(indexExam+1)+" "+exam[indexExam].question;
+			console.log(indexExam)
+			console.log(exam[indexExam])
+			if(exam[indexExam].exam_type == "mcq"){
+			instrution_exam.innerHTML = "จงเลือกคำตอบที่ถูกที่สุด";
+			document.getElementById("checkChoice1").checked = false;
+			document.getElementById("checkChoice2").checked = false;
+			document.getElementById("checkChoice3").checked = false;
+			document.getElementById("checkChoice4").checked = false;
+			
+			question.hidden = false;
+			choice1.innerHTML = exam[indexExam].choice1;
+			choice2.innerHTML = exam[indexExam].choice2;
+			choice3.innerHTML = exam[indexExam].choice3;
+			choice4.innerHTML = exam[indexExam].choice4;
+			}
+			else if(exam[indexExam].exam_type == "question"){
+					
+					current_anwer = anwserTextArea.value;
+					if(exam[indexExam].hasOwnProperty('anwser')){
+						anwserTextArea.value = exam[indexExam].anwser;
+												
+						if (exam[indexExam].exam_type == "question"){
+							
+							exam[indexExam].anwser = current_anwer;
+
+						}
+		
+					}
+					else{
+						if (exam[indexExam].exam_type == "question"){
+						
+						exam[indexExam].anwser = anwserTextArea.value;
+						
+						anwserTextArea.value = "";
+						}
+					}
+					
+					question.hidden = false;
+					instrution_exam.innerHTML = "จงตอบคำถามให้ถูกต้องที่สุด";
+					anwserTextArea.hidden=false;
+					codeText.hidden=true;
+					hideChoice1.hidden=true;
+					hideChoice2.hidden=true;
+					hideChoice3.hidden=true;
+					hideChoice4.hidden=true;				
+				}
+				else if(exam[indexExam].exam_type == "fitb"){
+					
+						if (exam[indexExam-1].exam_type == "question"){
+							current_anwer = anwserTextArea.value;
+							exam[indexExam-1].anwser = current_anwer;
+
+						}
+					addAnwserFitb();
+					
+					instrution_exam.innerHTML = "จงเลือกตัวเลขมาใส่ในช่องว่างให้ถูกต้อง";
+					question.hidden = true;
+					anwserTextArea.hidden=true;
+					all_anwser.hidden=false;
+					codeText.hidden=false;
+					console.log(indexExam , {{exam | length}});
+					all_anwser.hidden = false;
+					question_fitb.hidden = false;				
+					indexExam = searchFirstFitb()-1;
+					
+					hideChoice1.hidden=true;
+					hideChoice2.hidden=true;
+					hideChoice3.hidden=true;
+					hideChoice4.hidden=true;
+					
+					
+				}	
+		}
+			
+	}	
+	function sentExam(event){
+	
+	
+	if(exam[indexExam].exam_type == "question"){
+		exam[indexExam].anwser = anwserTextArea.value;
+	}
+	if(exam[indexExam].exam_type == "fitb"){
+			let text_field_aws = document.querySelectorAll("#textFieldAws");
+				for(let i=0 ; i<text_field_aws.length ;i++){
+					let user_anwser_fitb = parseInt(text_field_aws[i].value) + searchFirstFitb()-2;
+					exam[searchFirstFitb()-1+i].anwser = exam[user_anwser_fitb].all_anwser;
+					console.log(exam[searchFirstFitb()-1+i]);
+					console.log(searchFirstFitb()+i);
+					console.log(text_field_aws[i].value);
+						
+			}
+
+					
+		}
+		console.log(exam)
+            const s = JSON.stringify(exam);
+            console.log(s);
+			
+			$.ajax({
+                url: "/std_anwser",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(s)
+            });
+			window.location.href = "/std_anwser";
+	}
+	
+</script>
+{% endblock %}

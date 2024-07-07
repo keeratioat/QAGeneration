@@ -1,0 +1,48 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+<h2 style="text-align: center; margin-top: 5px;">ประวัติการสอบ</h2>
+<div class="card">
+    <div class="card-body">
+        <table class="table" style="margin-top: 15px;">
+
+            <thead>
+                <tr>
+                    <th scope="col">ชุดข้อสอบ</th>
+                    <th scope="col">ปรนัย</th>
+                    <th scope="col">จับคู่</th>
+                    <th scope="col">อัตนัย</th>
+                    <th scope="col">รวม</th>
+                </tr>
+            </thead>
+            {% for i in all_history %}
+            <tbody>
+
+                <tr>
+
+                    <td>{{i.exam}}</td>
+
+
+                    <td>{{i.mcq}}/{{i.mcq_point}}
+                    </td>
+                    <td>{{i.fitb}}/{{i.fitb_point}}
+                    </td>
+                    {%if i.question == None%}
+                    <td style="color:red ;">ยังไม่ตรวจข้อเขียน</td>
+                    <td>{{i.mcq + i.fitb}}</td>
+                    {%else%}
+                    <td>{{i.question}}/{{i.question_point}}</td>
+                    <td>{{i.mcq + i.fitb + i.question}}/{{i.mcq_point + i.fitb_point +i.question_point}}</td>
+                    {% endif %}
+
+                </tr>
+
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+
+    <a class="btn btn-success" href="{{url_for('std_route.main_page_std')}}">กลับหน้าหลัก</a>
+</div>
+{% endblock %}

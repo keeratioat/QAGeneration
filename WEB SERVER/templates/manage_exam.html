@@ -1,0 +1,85 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+<h1 style="text-align: center; margin-top: 10px;">ข้อสอบทั้งหมด</h1>
+<div class="col d-flex justify-content-center">
+    <div class="card " style="width: 90rem; margin-top: 15px;">
+        <div class="card-body">
+
+
+            <table class="table" style="margin-top: 15px;">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">ชุดข้อสอบ</th>
+
+                        <th scope="col">ดาวน์โหลดข้อสอบ</th>
+                        <th scope="col">ลบ</th>
+                    </tr>
+                </thead>
+                {%for exam in all_exam %}
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="check" onclick="selectExam()">
+                        </td>
+                        <td>{{exam.exam_name}}</td>
+
+
+                        <td>
+                            <button id="pdfButton" onclick="examPdf('{{exam.exam_name}}')" class="btn btn-success" disabled>
+                                <i class="fa fa-file-pdf-o"></i></button>
+                        </td>
+                        <td>
+                            <button id="delButton" onclick="delExam('{{exam.exam_name}}')" class="btn btn-success" disabled>
+                                <i class="fa fa-trash"></i>
+    
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+                {% endfor %}
+
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 10px;">
+
+    <a class="btn btn-success" href="{{url_for('teacher_route.main_page')}}">กลับหน้าหลัก</a>
+</div>
+<script>
+    function selectExam() {
+
+        var checkExam = document.querySelectorAll("#check");
+        var pdfButton = document.querySelectorAll("#pdfButton");
+        var delButton = document.querySelectorAll("#delButton");
+
+        for (let i = 0; i < checkExam.length; i++) {
+            if (checkExam[i].checked == true) {
+                pdfButton[i].disabled = false;
+                delButton[i].disabled = false;
+            } else {
+                pdfButton[i].disabled = true;
+                delButton[i].disabled = true;
+            }
+
+        }
+
+    }
+
+    function examPdf(exam_name) {
+        window.location.href = "/exam_pdf/" + exam_name
+    }
+
+    function delExam(exam_name) {
+        let text = "คุณแน่ใจหรือไม่ที่จะลบข้อสอบชุด " + exam_name;
+        if (confirm(text) == true) {
+            window.location.href = "/delete_exam/" + exam_name
+        }
+
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>เพิ่มรายชื่อนักศึกษาแบบรายบุคคล</h3>
+
+                    <a href="{{url_for('manage_user_route.add_user')}}"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>เพิ่มรายชื่อนักศึกษาแบบเป็นกลุ่ม (.CSV)</h3>
+
+                    <a href="{{url_for('manage_user_route.add_user_csv')}}"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 10px;">
+
+        <a class="btn btn-success" href="{{url_for('teacher_route.main_page')}}">กลับหน้าหลัก</a>
+    </div>
+
+
+    {% endblock %}

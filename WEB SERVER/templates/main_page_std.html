@@ -1,0 +1,43 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+
+
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>ทำข้อสอบ</h3>
+                    <a href="/select_exam"><i class="fa fa-edit" style="font-size:48px"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>ประวัติการสอบ</h3>
+                    <a href="{{url_for('std_route.history_examination')}}"><i class="fa fa-edit" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>เปลี่ยนรหัสผ่าน</h3>
+                    <a href="{{url_for('std_route.change_pwd')}}"> <i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

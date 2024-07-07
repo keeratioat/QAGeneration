@@ -1,0 +1,28 @@
+{% extends 'layout/layout.html' %} {% block content %}
+
+<div class="row" style="margin-top: 50px;">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>เข้าสู่ระบบนักศึกษา</h3>
+                    <a href="/login_std"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <h3>เข้าสู่ระบบอาจารย์</h3>
+                    <a href="/login_teacher"><i class="fa fa-user" style="font-size:48px"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <img src="static/object oriented programming.png" alt="" style="margin-top: 20px;">
+    </div>
+    {% endblock %}

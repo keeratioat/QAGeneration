@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>exam</title>
+</head>
+
+<body>
+    <p style="text-align: center; font-family: 'Sarabun', sans-serif;">ข้อสอบวิชา {{session['subject_name']}}</p>
+    <p style="text-align: center; font-family: 'Sarabun', sans-serif;">ชื่อ-นามสกุล.........................................................................................................รหัสนักศึกษา.....................................</p>
+    <h3 style="font-family: 'Sarabun', sans-serif;">คำชี้แจง จงเลือกคำตอบที่ถูกที่สุด</h3> {%for i in exams%} {%if i.exam_type == 'mcq'%}
+    <p style="font-family: 'Sarabun', sans-serif;">{{loop.index}}. {{i.question}}</p>
+    <p style="font-family: 'Sarabun', sans-serif;">1) {{i.choice1}}</p>
+    <p style="font-family: 'Sarabun', sans-serif;">2) {{i.choice2}}</p>
+    <p style="font-family: 'Sarabun', sans-serif;">3) {{i.choice3}}</p>
+    <p style="font-family: 'Sarabun', sans-serif;">4) {{i.choice4}}</p>
+
+    {%endif%} {%endfor%}
+    <div style="display:block; clear:both; page-break-after:always;"></div>
+    <h3 style="font-family: 'Sarabun', sans-serif;">คำชี้แจง จงเลือตอบคำถามให้ถูกที่สุด</h3>
+    {%for i in exams%} {%if i.exam_type == 'question'%}
+    <p style="font-family: 'Sarabun', sans-serif;">{{loop.index}}. {{i.question}}</p>
+
+
+    {%endif%} {%endfor%}
+    <p style="font-family: 'Sarabun', sans-serif; font-weight: bold; text-decoration: underline;">พื้นที่ตอบคำถาม</p>
+
+    <div style="display:block; clear:both; page-break-after:always;"></div>
+    <h3 style="font-family: 'Sarabun', sans-serif;">คำชี้แจง จงเลือตอบคำถามให้ถูกที่สุด</h3>
+    <div style="border: solid; padding: 10px;">
+        {%for i in exams%} {%if i.exam_type == 'fitb'%}
+        <p style="font-family: 'Sarabun', sans-serif; display: inline; padding: 10px; margin: 10px;">{{i.all_anwser}}</p>
+
+
+        {%endif%} {%endfor%} </div>
+    {%for i in exams%} {%if i.exam_type == 'fitb'%}
+    <p style="font-family: 'Sarabun', sans-serif;">{{loop.index}}. {{i.question}}</p>
+    <div style="border: solid; padding: 60px 10px 10px"></div>
+
+
+    {%endif%} {%endfor%}
+
+
+</body>
+
+</html>

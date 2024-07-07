@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+</head>
+<style>
+    table,
+    td,
+    th {
+        border: 1px solid;
+        padding: 10px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+</style>
+
+<body>
+    <h2 style="text-align: center; margin-top: 20px">คะแนนนักศึกษา</h2>
+    <h3>ชุดข้อสอบ {{exam_name}} </h3>
+    <table class="table">
+        <thead>
+            <tr style="border: 1px solid;">
+                <th scope="col">รหัสนักศึกษา</th>
+
+                <th scope="col">ปรนัย</th>
+                <th scope="col">จับคู่</th>
+                <th scope="col">อัตนัย</th>
+
+
+                <th scope="col">รวม</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {%for i in std_point%}
+            <tr>
+
+
+                <td>{{i.student_id}}</td>
+                <td>{{i.mcq}}/{{i.mcq_point}}</td>
+                <td>{{i.fitb}}/{{i.fitb_point}}</td>
+                {%if i.question == None%}
+                <td>
+                    ยังไม่ตรวจข้อเขียน
+                </td>
+                <td>{{i.mcq + i.fitb}}</td>
+                {%else%}
+                <td>{{i.question}}/{{i.question_point}}</td>
+                <td>{{i.mcq + i.fitb + i.question}}/{{i.mcq_point + i.fitb_point +i.question_point}}</td>
+                {% endif %}
+
+
+            </tr>
+            {%endfor%}
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

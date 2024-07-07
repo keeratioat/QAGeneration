@@ -1,0 +1,25 @@
+{% extends 'layout/layoutstd.html' %} {% block content %} {%if exam_detail.status_exam == 'open'%}
+<h2 style="text-align: center; margin-top: 5px;">{{exam_detail.exam_name}}</h2>
+
+<div class="col d-flex justify-content-center">
+    <div class="card " style="width: 30rem;">
+        <div class="card-body">
+            <h3 style="text-align: center;">รายละเอียดการสอบ</h3>
+            <h5>- คำชี้แจง {{exam_detail.exam_detail}}</h5>
+            <h5>- จำนวนข้อสอบ {{exam_detail.mcq + exam_detail.fitb + exam_detail.question}} ข้อ</h5>
+            <h5>- คะแนนทั้งหมด {{exam_detail.total_point}} คะแนน</h5>
+            <h5>- จับคู่ {{exam_detail.fitb}} ข้อ</h5>
+            <h5>- ปรนัย {{exam_detail.mcq}} ข้อ</h5>
+            <h5>- อัตนัย {{exam_detail.question}} ข้อ</h5>
+            <h5>- เวลาทำข้อสอบ {{exam_detail.hour}} ชม. {{exam_detail.min}} นาที {{exam_detail.sec}} วินาที</h5>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 text-center" style="margin-top: 10px;">
+    <p style="color: red;">*หมายเหตุ: หากทำข้อสอบไม่ทันระบบจะทำการส่งอัตโนมัติ</p>
+    <a href="{{url_for('std_route.examchoice' , exam_name = exam_detail.exam_name )}}" class="btn btn-primary" style="text-align: center;">เริ่มทำข้อสอบ</a>
+</div>
+{% else %}
+<h1 style="text-align: center;">ยังไม่เปิดให้ทำข้อสอบ</h1>
+{% endif %} {% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+<h1 style="color: red;">Time 00:00:00</h1>
+<h5 style="margin-top: 10px; margin-bottom: 10px;">ข้อที่ 2 Method อยู่ในคลาส Person</h5>
+
+<div class="mb-3">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" disabled>
+     public class Person {
+        String name;
+        String lastname;
+        int age;
+        
+        public Person(String name, String lastname, int age) {
+            this.name = name;
+            this.lastname = lastname;
+            this.age = age;
+            
+        }
+        public void eat(){
+            
+        }
+        public void sleep(){
+            
+        }
+        public void walk(){
+            
+        }
+    }</textarea>
+</div>
+
+<div class="card " style="width: 30rem; margin-bottom: 10px;">
+    <div class="card-body">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              eat()
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="card " style="width: 30rem; margin-bottom: 10px;">
+    <div class="card-body">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              sleep()
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="card " style="width: 30rem; margin-bottom: 10px;">
+    <div class="card-body">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              walk()
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="card " style="width: 30rem;">
+    <div class="card-body">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              study()
+            </label>
+        </div>
+    </div>
+</div>
+
+<a href="#" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px;">ก่อนหน้า</a>
+<a href="#" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 10px; float: right;">ถัดไป</a> {% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+
+<h1>Time <input type="number" id="hour" value="4" style="width: 4.3rem;" disabled>:<input type="number" id="minute" value="00" style="width: 4.3rem;" disabled>:<input type="number" id="sec" value="00" style="width: 4.3rem;" disabled></h1>
+
+<h5 style="margin-top: 10px; margin-bottom: 10px;">ข้อที่ 10 Override Method กับ Overloading Method ต่างกันอย่างไร จงอธิบายอย่างละเอียด พร้อมยกตัวอย่าง</h5>
+
+<textarea class="form-control" id="exampleFormControlTextarea1" rows="20"> </textarea>
+
+<a href="{{url_for('std_route.examfilltext')}}" class="btn btn-primary" style="margin-top: 10px;">ก่อนหน้า</a>
+<a href="{{url_for('std_route.examchoice')}}" class="btn btn-primary" style="margin-top: 10px; float: right;">ถัดไป</a> {% endblock %}

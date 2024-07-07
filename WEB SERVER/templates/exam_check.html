@@ -1,0 +1,82 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+<div class="d-flex justify-content-between">
+    <div>
+        <h3 style=" margin-top: 10px;">ชื่อ-นามสกุล {{firstname}} {{lastname}}</h3>
+
+    </div>
+    <div>
+        <h3 style="margin-top: 10px; text-align: right;">ข้อสอบ {{exam_name}}</h3>
+    </div>
+
+</div>
+
+
+{% for i in anwser%}
+<div class="card" style="margin: 10px 0px 10px;">
+    <div class="card-body">
+        <h5 id="question" style="margin-top: 10px;">{{i.question}}</h5>
+
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" disabled="true"> {{i.anwser}}</textarea>
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="form-group col-3">
+                <label style="font-size: 16pt;">คะแนน</label>
+                <input id="pointExam" type="text" value="{{i.point}}" class="form-control">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{%endfor%}
+<div class="d-flex justify-content-between" style="margin: 10px 0px 10px;">
+    <div>
+        <button class="btn btn-success" onclick="history.back()">ย้อนกลับ</button>
+
+    </div>
+    <div>
+        <button class="btn btn-success" onclick="sendPointExam()">บันทึก</button>
+    </div>
+
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+<script>
+    let studentPointExam = [];
+
+    function sendPointExam(event) {
+        let pointExam = document.querySelectorAll("#pointExam");
+        let question = document.querySelectorAll("#question");
+
+        for (let i = 0; i < pointExam.length; i++) {
+            studentPointExam[i] = {
+                'question': question[i].innerHTML,
+                'point': Number(pointExam[i].value),
+                'student': '{{student}}',
+                'exam_name': '{{exam_name}}'
+            };
+            console.log(Number(pointExam[i].value));
+        }
+
+
+
+        console.log(studentPointExam)
+        const s = JSON.stringify(studentPointExam);
+        console.log(s);
+
+        $.ajax({
+            url: "/std_point_exam",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(s),
+            success: function(response) {
+                window.location = '/check_question'
+            }
+
+
+        });
+
+    }
+</script>
+{% endblock %}

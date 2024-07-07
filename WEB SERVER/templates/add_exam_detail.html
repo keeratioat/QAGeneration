@@ -1,0 +1,67 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<form action="{{url_for('teacher_route.create_comp')}}" method="POST">
+    <div class="col d-flex justify-content-center">
+        <div class="card " style="width: 40rem; margin-top: 15px;">
+            <div class="card-body">
+                <h3 style="text-align: center;">กำหนดรายละเอียดและระบุคำชี้แจง</h3>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="form-group col">
+                        <label class="form-label">ระบุชื่อข้อสอบ</label>
+
+                    </div>
+
+                    <div class="form-group col-8">
+                        <input type="text" name="exam_name" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="form-group col">
+                        <label class="form-label">ระบุคำชี้แจง</label>
+
+                    </div>
+
+                    <div class="form-group col-8">
+                        <input type="text" name="exam_detail" class="form-control" required>
+                    </div>
+                </div>
+
+
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="form-group col">
+                        <label class="form-label" aria-describedby="timehelp">กำหนดเวลาที่ใช้ในการสอบ</label>
+
+
+                    </div>
+
+                    <div class="col-sm">
+                        <input type="text" class="form-control" name="hr" placeholder="ชั่วโมง" aria-label="Hr" required>
+                    </div>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" name="min" placeholder="นาที" aria-label="Min" required>
+                    </div>
+                    <div class="col-sm">
+                        <input type="text" class="form-control" name="sec" placeholder="วินาที" aria-label="Sec" required>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center" style="margin: 10px 0px 10px;">
+        <div>
+            <button type="button" onclick="history.back()" class="btn btn-primary" style="margin-right: 80px;">ย้อนกลับ</button>
+
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" style="text-align: center;">ยืนยัน</button>
+        </div>
+
+    </div>
+
+</form> {% endblock %}

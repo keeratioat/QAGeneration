@@ -1,0 +1,52 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+
+<h1 style="text-align: center; margin-top: 10px;">ชุดข้อสอบทั้งหมด</h1>
+
+
+<div class="card">
+    <div class="card-body">
+        <table class="table" style="margin-top: 15px;">
+            <thead>
+                <tr>
+
+                    <th scope="col">ชุดข้อสอบ</th>
+                    <th scope="col">เปิด</th>
+                    <th scope="col">ปิด</th>
+                    <th scope="col">สถานะ</th>
+
+                </tr>
+            </thead>
+            {%for i in all_exam%}
+            <tbody>
+
+
+                <tr>
+
+                    <td>{{i.exam_name}}</td>
+                    <td><a href="{{url_for('teacher_route.change_status_exam_open',exam_name = i.exam_name,exam_status = i.status)}}" class="btn btn-success">เปิด</a></td>
+                    <td><a href="{{url_for('teacher_route.change_status_exam_close',exam_name = i.exam_name,exam_status = i.status)}}" class="btn btn-success">ปิด</a></td>
+                    {% if i.status == 'open'%}
+                    <td>
+                        <p>เปิด</p>
+                    </td>
+
+                    {% else %}
+                    <td>
+                        <p>ปิด</p>
+                    </td>
+
+                    {% endif %}
+                </tr>
+
+            </tbody>
+            {%endfor%}
+
+
+        </table>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 10px;">
+
+    <a class="btn btn-success" href="{{url_for( 'teacher_route.main_page')}}">กลับหน้าหลัก</a>
+</div>
+{% endblock %}

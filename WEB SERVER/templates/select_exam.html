@@ -1,0 +1,70 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+<h2 style="text-align: center; margin-top: 10px;">ข้อสอบทั้งหมด</h2>
+<div class="col d-flex justify-content-center">
+    <div class="card " style="width: 90rem; margin-top: 15px;">
+        <div class="card-body">
+
+
+            <table class="table" style="margin-top: 15px;">
+                <thead>
+                    <tr>
+
+                        <th scope="col">ชุดข้อสอบ</th>
+
+                        <th scope="col">เข้าข้อสอบ</th>
+                        <th scope="col">ทำข้อสอบ</th>
+                        <th scope="col">สถานะ</th>
+
+
+                    </tr>
+                </thead>
+                {% for i in exam%}
+                <tbody>
+
+                    <tr>
+
+                        <td>{{i.exam}}</td>
+
+                        {% if i.is_exam == 0 and i.status == "open"%}
+                        <td>
+                            <a href="{{url_for('std_route.examdetail' , exam_name = i.exam) }}" class=" btn btn-success"><i class="fa fa-book fa-fw "></i></a>
+                        </td>
+                        <td>ยังไม่ได้ทำข้อสอบ</td>
+                        <td>เปิด</td>
+
+                        {%elif i.is_exam == 0 and i.status == "close"%}
+                        <td>
+                            <button href="{{url_for('std_route.examdetail' , exam_name = i.exam) }}" class=" btn btn-success" disabled><i class="fa fa-book fa-fw "></i> </button>
+                        </td>
+                        <td>ยังไม่ได้ทำข้อสอบ</td>
+                        <td>ปิด</td>
+
+                        {%elif i.is_exam == 1 and i.status == "close"%}
+                        <td>
+                            <button href="{{url_for('std_route.examdetail' , exam_name = i.exam) }}" class=" btn btn-success" disabled><i class="fa fa-book fa-fw "></i> </button>
+                        </td>
+                        <td>ทำข้อสอบไปแล้ว</td>
+                        <td>ปิด</td>
+                        {%elif i.is_exam == 1 and i.status == "open"%}
+                        <td>
+                            <button href="{{url_for('std_route.examdetail' , exam_name = i.exam) }}" class=" btn btn-success" disabled><i class="fa fa-book fa-fw "></i> </button>
+                        </td>
+                        <td>ทำข้อสอบไปแล้ว</td>
+                        <td>เปิด</td>
+                        {% endif %}
+                    </tr>
+
+                </tbody>
+                {%endfor%}
+
+
+            </table>
+        </div>
+    </div>
+</div>
+<div style="text-align: center; margin-top: 10px;">
+
+    <a class="btn btn-success" href="{{url_for('std_route.main_page_std')}}">กลับหน้าหลัก</a>
+</div>
+
+{% endblock %}

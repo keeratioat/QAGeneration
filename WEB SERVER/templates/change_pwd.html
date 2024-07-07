@@ -1,0 +1,30 @@
+{% extends 'layout/layoutstd.html' %} {% block content %}
+
+<h1 style="margin-top: 10px; text-align: center;">เปลี่ยนรหัสผ่าน</h1>
+<form action="{{url_for('std_route.change_pwd')}}" method="POST">
+
+    <div class="col d-flex justify-content-center">
+        <div class="card " style="width: 30rem;">
+            <div class="card-body">
+                <div class="col d-flex justify-content-center">
+                    <img src="static/reset_pwd.png" alt="" style="height: 10rem;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">รหัสผ่าน</label>
+                    <input type="password" class="form-control" name="pwd">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ยืนยันรหัสผ่าน</label>
+                    <input type="password" class="form-control" name="con_pwd">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 text-center" style="margin-top: 10px;">
+        <button style="margin-bottom: 10px;" type="submit" class="btn btn-success">ยืนยัน</button>
+    </div>
+</form>
+
+{% endblock %}

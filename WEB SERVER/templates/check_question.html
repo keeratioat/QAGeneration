@@ -1,0 +1,46 @@
+{% extends 'layout/layout_teacher.html' %} {% block content %}
+<h1 style="text-align: center; margin-top: 10px;">ตรวจข้อสอบ</h1>
+<div class="card">
+    <div class="card-body">
+        <table class="table" style="margin-top: 15px;">
+            <thead>
+                <tr>
+                    <th scope="col">รหัสนักศึกษา</th>
+                    <th scope="col">ชื่อ-นามสกุล</th>
+                    <th scope="col">ชุดข้อสอบ</th>
+                    <th scope="col">สถานะ</th>
+                    <th scope="col">ตรวจข้อเขียน</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in std %}
+                <tr>
+
+
+                    <td>{{i.uname}}</td>
+                    <td>{{i.firstname}} {{i.lastname}}</td>
+                    <td>{{i.exam_name}}</td>
+                    {% if i.is_check == None%}
+                    <td style="color: red;">ยังไม่ตรวจข้อสอบ</td>
+                    {%else%}
+                    <td style="color: green;" ">ตรวจข้อสอบแล้ว</td>
+
+                    {%endif%}
+                    <td><a href="{{url_for( 'teacher_route.exam_check',std_uname=i .uname,exam_name=i .exam_name,firstname=i.firstname,lastname=i.lastname)}} " class="btn btn-success "><i class="fa fa-book fa-fw "></i></a></td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+
+        </table>
+
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 10px; ">
+
+    <a class="btn btn-success " href="{{url_for( 'teacher_route.main_page')}} ">กลับหน้าหลัก</a>
+</div>
+{% endblock %}
